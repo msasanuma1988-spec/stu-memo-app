@@ -1,0 +1,472 @@
+:root {
+  /* 配色: 学習ノートを思わせる、落ち着いた紙とインクのトーン */
+  --color-bg: #f7f4ee;
+  --color-surface: #fffdf9;
+  --color-border: #e4ddcf;
+  --color-border-strong: #d3c9b4;
+  --color-ink: #322d24;
+  --color-ink-soft: #766f60;
+  --color-accent: #3c5a6b;
+  --color-accent-soft: #eef2f0;
+  --color-accent-strong: #2c4351;
+
+  /* 公開/非公開バッジ: 意味が対になるよう、緑(公開)と中間グレー(非公開)で強くコントラストをつける */
+  --color-public-bg: #e4f2e6;
+  --color-public-border: #a9d3af;
+  --color-public-text: #2b6b3f;
+  --color-private-bg: #efece4;
+  --color-private-border: #cfc6b3;
+  --color-private-text: #756a54;
+
+  --color-tag-bg: #eef1f5;
+  --color-tag-border: #c9d3de;
+  --color-tag-text: #3c5a6b;
+
+  --font-heading: "Yu Mincho", "Hiragino Mincho ProN", "YuMincho", "Noto Serif JP", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Yu Gothic", "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(50, 45, 36, 0.04), 0 4px 12px rgba(50, 45, 36, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-ink);
+  background: var(--color-bg);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.site-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-accent-strong);
+}
+
+.site-header-auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+.site-main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 72px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.button {
+  display: inline-block;
+  padding: 9px 18px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-family: var(--font-body);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.button:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.button-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.button-primary:hover {
+  background: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+}
+
+.memo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.memo-card {
+  display: block;
+  padding: 18px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.memo-card:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-1px);
+}
+
+.memo-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.memo-card-title {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.memo-card-excerpt {
+  margin: 10px 0;
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre-line;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.memo-card-tags,
+.memo-detail-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.memo-detail-tags {
+  margin-bottom: 20px;
+}
+
+/* バッジ共通: タグと公開状態を形と色の両方で見分けられるようにする */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+/* タグ: 角丸を抑えた四角いチップにして、公開状態バッジ（丸ピル）と形で区別する */
+.badge-tag {
+  border-radius: var(--radius-s);
+  background: var(--color-tag-bg);
+  border: 1px solid var(--color-tag-border);
+  color: var(--color-tag-text);
+  font-weight: 500;
+}
+
+/* 公開/非公開: 丸いピル型 + 色付きドットで、一覧を流し見しても一瞬で判別できるようにする */
+.badge-public,
+.badge-private {
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+}
+
+.badge-public::before,
+.badge-private::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.badge-public {
+  background: var(--color-public-bg);
+  border-color: var(--color-public-border);
+  color: var(--color-public-text);
+}
+
+.badge-private {
+  background: var(--color-private-bg);
+  border-color: var(--color-private-border);
+  color: var(--color-private-text);
+}
+
+.memo-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.memo-detail-header h1 {
+  font-size: 1.6rem;
+  margin: 0 0 6px;
+}
+
+.memo-detail-meta {
+  color: var(--color-ink-soft);
+  font-size: 0.85rem;
+  margin: 0 0 16px;
+}
+
+.memo-detail-content {
+  white-space: pre-line;
+  line-height: 1.85;
+  margin-bottom: 32px;
+  padding: 20px 22px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+}
+
+.memo-detail-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 36px;
+}
+
+.button-danger {
+  border-color: #b3564a;
+  color: #b3564a;
+  background: var(--color-surface);
+}
+
+.button-danger:hover {
+  background: #fbecea;
+  border-color: #9c4a3f;
+}
+
+.comment-section {
+  border-top: 1px solid var(--color-border);
+  padding-top: 24px;
+}
+
+.comment-section h2 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment-item {
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  background: var(--color-surface);
+}
+
+.comment-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--color-ink-soft);
+  margin-bottom: 5px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--color-accent-strong);
+}
+
+.comment-content {
+  margin: 0;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.button-link {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 0.78rem;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.button-link:hover {
+  color: var(--color-accent);
+}
+
+.comment-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.comment-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-form .button {
+  align-self: flex-start;
+}
+
+.comment-form textarea,
+.comment-edit-form textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-s);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  resize: vertical;
+}
+
+.comment-form textarea:focus,
+.comment-edit-form textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.empty-text {
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+}
+
+.memo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-card);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="password"],
+.form-field textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-s);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--color-ink);
+  background: var(--color-bg);
+}
+
+.form-field input[type="text"]:focus,
+.form-field input[type="email"]:focus,
+.form-field input[type="password"]:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.form-error {
+  padding: 10px 14px;
+  border-radius: var(--radius-s);
+  background: #fbecea;
+  border: 1px solid #e3b0a8;
+  color: #9c4a3f;
+  font-size: 0.85rem;
+}
+
+.auth-footnote {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+.form-field-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+}
+
+.form-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-ink-soft);
+}
