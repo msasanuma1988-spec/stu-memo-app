@@ -1,3 +1,4 @@
+import { Save, Tag } from "lucide-react";
 import type { Memo } from "@/lib/types";
 
 export function MemoForm({
@@ -36,7 +37,10 @@ export function MemoForm({
       </div>
 
       <div className="form-field">
-        <label htmlFor="tags">タグ（カンマ区切りで複数入力できます）</label>
+        <label htmlFor="tags">
+          <Tag size={13} aria-hidden />
+          タグ（カンマ区切りで複数入力できます）
+        </label>
         <input
           id="tags"
           name="tags"
@@ -57,6 +61,7 @@ export function MemoForm({
       </div>
 
       <button type="submit" className="button button-primary">
+        <Save size={16} aria-hidden />
         {submitLabel}
       </button>
     </form>

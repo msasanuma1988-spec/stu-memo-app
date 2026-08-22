@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft, MessageSquare, Pencil } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { fetchCommentsByMemoId, fetchMemoById } from "@/lib/memos";
 import { formatDateTime } from "@/lib/format";
@@ -31,7 +32,10 @@ export default async function MemoDetailPage({ params }: { params: Promise<{ id:
   return (
     <div>
       <p>
-        <Link href="/memos">← メモ一覧に戻る</Link>
+        <Link href="/memos" className="back-link">
+          <ArrowLeft size={15} aria-hidden />
+          メモ一覧に戻る
+        </Link>
       </p>
 
       <div className="memo-detail-header">
@@ -56,6 +60,7 @@ export default async function MemoDetailPage({ params }: { params: Promise<{ id:
       {isOwner && (
         <div className="memo-detail-actions">
           <Link href={`/memos/${memo.id}/edit`} className="button">
+            <Pencil size={15} aria-hidden />
             このメモを編集する
           </Link>
           <VisibilityToggleButton memoId={memo.id} isPublic={memo.isPublic} />
@@ -65,7 +70,10 @@ export default async function MemoDetailPage({ params }: { params: Promise<{ id:
 
       {memo.isPublic && (
         <section className="comment-section">
-          <h2>コメント（{comments.length}件）</h2>
+          <h2>
+            <MessageSquare size={17} aria-hidden />
+            コメント（{comments.length}件）
+          </h2>
           <CommentList comments={comments} memoId={memo.id} currentUserId={user?.id} />
           {user ? (
             <CommentForm memoId={memo.id} />

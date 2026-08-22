@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UserPlus } from "lucide-react";
 import { signUp } from "@/lib/actions/auth";
 
 export default async function SignupPage({
@@ -33,6 +34,7 @@ export default async function SignupPage({
         </div>
 
         <button type="submit" className="button button-primary">
+          <UserPlus size={16} aria-hidden />
           アカウント作成
         </button>
       </form>

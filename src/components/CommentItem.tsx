@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { Check, Pencil, Trash2, X } from "lucide-react";
 import { deleteComment, updateComment } from "@/lib/actions/comments";
 import { formatDateTime } from "@/lib/format";
 import type { Comment } from "@/lib/types";
@@ -64,9 +65,11 @@ export function CommentItem({
               onClick={handleSave}
               disabled={isPending}
             >
+              <Check size={15} aria-hidden />
               保存する
             </button>
             <button type="button" className="button" onClick={handleCancel} disabled={isPending}>
+              <X size={15} aria-hidden />
               キャンセル
             </button>
           </div>
@@ -77,9 +80,11 @@ export function CommentItem({
           {isOwner && (
             <div className="comment-actions">
               <button type="button" className="button-link" onClick={() => setIsEditing(true)}>
+                <Pencil size={13} aria-hidden />
                 編集
               </button>
               <button type="button" className="button-link" onClick={handleDelete} disabled={isPending}>
+                <Trash2 size={13} aria-hidden />
                 削除
               </button>
             </div>

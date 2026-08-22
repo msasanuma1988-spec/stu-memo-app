@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { fetchMemos } from "@/lib/memos";
 import { MemoCard } from "@/components/MemoCard";
@@ -12,7 +13,8 @@ export default async function MemoListPage() {
       <div className="page-header">
         <h1>メモ一覧</h1>
         <Link href="/memos/new" className="button button-primary">
-          + 新規作成
+          <Plus size={16} aria-hidden />
+          新規作成
         </Link>
       </div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogIn } from "lucide-react";
 import { signIn } from "@/lib/actions/auth";
 
 export default async function LoginPage({
@@ -28,6 +29,7 @@ export default async function LoginPage({
         </div>
 
         <button type="submit" className="button button-primary">
+          <LogIn size={16} aria-hidden />
           ログイン
         </button>
       </form>
